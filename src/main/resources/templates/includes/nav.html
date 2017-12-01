@@ -1,0 +1,12 @@
+<header>
+	<div class="header-wrapper">
+		<a href="#" class="brand-logo">JWP Trello</a>
+		<ul>
+			<div sec:authorize="isAuthenticated()">
+				<li><a href="#">logout</a></li>
+			</div>
+			<span th:text="${principal}"></span>
+			tq
+		</ul>
+	</div>
+</header>

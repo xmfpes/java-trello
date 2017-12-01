@@ -1,0 +1,43 @@
+spring:
+  jpa: 
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:mysql://localhost:3306/trello?autoReconnect=true&useSSL=false
+    username: root
+    password: 1111
+---
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+---
+facebook:
+    client:
+      clientId: 382973515467308
+      clientSecret: 5f34a913b8cda4380649e670ab5f552d
+      accessTokenUri: https://graph.facebook.com/oauth/access_token
+      userAuthorizationUri: https://www.facebook.com/dialog/oauth
+      tokenName: oauth_token
+      authenticationScheme: query
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://graph.facebook.com/me
+---
+github:
+    client:
+      clientId: 246b1fa498fcd7906e07
+      clientSecret: acd9eae2ac14ada7ab49fe02451e64c939dbca37
+      accessTokenUri: https://github.com/login/oauth/access_token
+      userAuthorizationUri: https://github.com/login/oauth/authorize
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://api.github.com/user

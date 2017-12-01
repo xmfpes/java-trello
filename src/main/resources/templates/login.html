@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="/includes/header">
+</head>
+
+    <body>
+	<div th:replace="/includes/nav">
+	</div>
+
+    <div class="login-box z-depth-2">
+
+        <h4>Login To Trello</h4>
+
+        <form class="login-form" method="POST">
+        		<input type ="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> 
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" name="username" class="validate"/>
+                    <label for="email">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" type="password" name="password" class="validate"/>
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <input class="login-btn waves-effect waves-light btn" type="submit" value="로그인" />
+        </form>
+
+        <p class="alternatives-separator">or</p>
+
+        <a class="github-login waves-effect waves-light btn" href="/login/github">
+            <i class="fa fa-github-square" aria-hidden="true"></i>
+           	Github 로그인
+        </a>
+		<br/>
+        <a class="waves-effect facebook-btn btn" href="/login/facebook">
+            <i class="fa fa-facebook-official" aria-hidden="true"></i>
+            Facebook 로그인
+        </a>
+
+    </div>
+
+      <script type="text/javascript" src="/lib/jquery-2.2.0.min.js"></script>
+      <script type="text/javascript" src="/lib/materialize.min.js"></script>
+    </body>
+  </html>
