@@ -1,12 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <header>
 	<div class="header-wrapper">
 		<a href="#" class="brand-logo">JWP Trello</a>
 		<ul>
 			<div sec:authorize="isAuthenticated()">
-				<li><a href="#">logout</a></li>
+				<li><a href="#">Sign out</a></li>
+				<li><a href="#">개인정보 수정</a></li>
 			</div>
-			<span th:text="${principal}"></span>
-			tq
+			<div sec:authorize="!isAuthenticated()">
+				<li><a href="/login">Sign in</a></li>
+			</div>
 		</ul>
 	</div>
 </header>
+</html>

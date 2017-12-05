@@ -31,7 +31,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.security.oauth:spring-security-oauth2')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.0.RELEASE'
+	compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4")
 	runtime('mysql:mysql-connector-java')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.security:spring-security-test')
