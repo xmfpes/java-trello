@@ -5,7 +5,10 @@
 		<a href="#" class="brand-logo">JWP Trello</a>
 		<ul>
 			<div sec:authorize="isAuthenticated()">
-				<li><a href="#">Sign out</a></li>
+			<form class="logout-form" action="/logout" style="display:inline;" method="post">
+				<input type ="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+				<li><a href="#" onclick="logoutSubmit()">Sign out</a></li>
+			</form>
 				<li><a href="#">개인정보 수정</a></li>
 			</div>
 			<div sec:authorize="!isAuthenticated()">
@@ -15,3 +18,8 @@
 	</div>
 </header>
 </html>
+<script>
+function logoutSubmit(){
+	$('.logout-form').submit();
+}
+</script>

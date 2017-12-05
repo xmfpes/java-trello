@@ -5,10 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import codesquad.annotation.LoginUser;
-import lombok.extern.java.Log;
-
-@Log
 @Controller
 public class HomeController {
 	@GetMapping("")

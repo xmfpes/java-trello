@@ -51,6 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/normal/**").hasRole("BASIC")
 			.antMatchers("/board/**").authenticated()
 			.antMatchers("/login/**").anonymous()
+			.and().exceptionHandling().accessDeniedPage("/exception/403ErrorPage");
+		
+		http.authorizeRequests()
 			.antMatchers("/**").permitAll()
 			.and().formLogin()
 			.loginPage("/login")
@@ -59,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     			.failureUrl("/login")
     			.and()
     			.logout()
+    			.logoutSuccessUrl("/")
     			.and()
     			.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
 	}
