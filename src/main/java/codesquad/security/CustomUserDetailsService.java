@@ -6,14 +6,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import codesquad.domain.repository.MemberRepository;
+import codesquad.domain.repository.NormalMemberRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 	
 
 	@Autowired
-	MemberRepository memberRepository;
+	NormalMemberRepository memberRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

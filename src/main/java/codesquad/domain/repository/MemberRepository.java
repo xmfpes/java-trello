@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import codesquad.domain.Member;
 
-public interface MemberRepository extends CrudRepository<Member, Long> {
-	 public Optional<Member> findByUemail(String email);
+public interface MemberRepository <T extends Member> extends CrudRepository<T, Long> {
+	public Optional<Member> findByUemail(String email);	
 }

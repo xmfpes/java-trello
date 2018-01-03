@@ -17,7 +17,7 @@ import codesquad.domain.repository.MemberRepository;
 public class MemberController {
 	
 	@Autowired
-	MemberRepository memberRepository;
+	MemberRepository<Member> memberRepository;
 	
 	@PostMapping("")
 	public String create(Member member) {

@@ -16,9 +16,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     		return bean;
     }
     
+    @Bean
+    public SocialUserHandlerMethodArgumentResolver socialUserMethodArgumentResolver() {
+    		SocialUserHandlerMethodArgumentResolver bean = new SocialUserHandlerMethodArgumentResolver();
+    		return bean;
+    }
+    
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
     		argumentResolvers.add(loginUserMethodArgumentResolver());
+    		argumentResolvers.add(socialUserMethodArgumentResolver());
     		super.addArgumentResolvers(argumentResolvers);
     }
 }

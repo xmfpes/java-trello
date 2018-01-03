@@ -7,10 +7,10 @@ import javax.servlet.Filter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,11 +29,18 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.filter.CompositeFilter;
 
+import codesquad.domain.SocialEnum;
+import lombok.extern.java.Log;
+
 @EnableWebSecurity
 @EnableOAuth2Client
+@Log
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	CustomUserDetailsService customUserDetailsService;
+	
+	@Autowired
+	private ApplicationEventPublisher applicationEventPublisher;
 	
 	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
@@ -86,20 +93,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private Filter ssoFilter() {
 	  CompositeFilter filter = new CompositeFilter();
 	  List<Filter> filters = new ArrayList<>();
-	  filters.add(ssoFilter(facebook(), "/login/facebook"));
-	  filters.add(ssoFilter(github(), "/login/github"));
+	  filters.add(ssoFilter(facebook(), "/login/facebook", SocialEnum.FACEBOOK));
+	  filters.add(ssoFilter(github(), "/login/github", SocialEnum.GITHUB));
 	  filter.setFilters(filters);
 	  return filter;
 	}
 	
-	private Filter ssoFilter(ClientResources client, String path) {
+	private Filter ssoFilter(ClientResources client, String path, SocialEnum provider) {
 	  OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(path);
 	  OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
 	  filter.setRestTemplate(template);
-	  UserInfoTokenServices tokenServices = new UserInfoTokenServices(
-	      client.getResource().getUserInfoUri(), client.getClient().getClientId());
+	  CustomUserInfoTokenServices tokenServices = new CustomUserInfoTokenServices(
+	      client.getResource().getUserInfoUri(), client.getClient().getClientId(), provider);
 	  tokenServices.setRestTemplate(template);
 	  filter.setTokenServices(tokenServices);
+	  filter.setApplicationEventPublisher(applicationEventPublisher);
+	  filter.setAuthenticationSuccessHandler((req, res, fuck) -> {
+		  res.sendRedirect("/oauth2/" + path.split("/")[2]);
+		  log.info("pathpath " + path.split("/")[2]);
+	  });
 	  return filter;
 	}
 	
